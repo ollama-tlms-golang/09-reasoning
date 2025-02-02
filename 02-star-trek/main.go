@@ -23,7 +23,7 @@ func main() {
 
 	model := os.Getenv("LLM")
 	if model == "" {
-		model = "deepseek-r1:1.5b"
+		model = "deepseek-r1:32b"
 	}
 	// deepseek-r1:1.5b 🔴🔥
 	// deepseek-r1:7b 🔴
@@ -53,7 +53,7 @@ func main() {
 		log.Fatal("😡:", err)
 	}
 
-	federationMedicalDatabase, err := os.ReadFile("federation-medical-database.md")
+	federationMedicalDatabase, err := os.ReadFile("federation-medical-database.xml")
 	if err != nil {
 		log.Fatal("😡:", err)
 	}
@@ -73,8 +73,8 @@ func main() {
 	// Prompt construction
 	messages := []api.Message{
 		{Role: "system", Content: string(systemInstructions)},
-		{Role: "system", Content: string(federationMedicalDatabase)},
 		{Role: "system", Content: string(medicalInstructions)},
+		{Role: "system", Content: "# Federation Medical Database\n" + string(federationMedicalDatabase)},
 		{Role: "user", Content: userContent},
 	}
 
