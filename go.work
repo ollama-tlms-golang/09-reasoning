@@ -1,0 +1,8 @@
+go 1.23.4
+
+use (
+	00-simple
+	01-iris
+	02-star-trek
+	03-star-trek-rag
+)

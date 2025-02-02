@@ -1,0 +1,45 @@
+services:
+
+  ollama-deepseek:
+    image: k33g/tiny-models:0.5.7_deepseek-r1-1.5b
+    #ports:
+    #  - 11434:11434
+  
+  ollama-snowflake:
+    image: k33g/tiny-models:0.5.7_snowflake-arctic-embed-33m
+
+  # docker compose up ollama-service chunks-service --build
+  chunks-service:
+    build: .
+    command: go test
+    environment:
+      - OLLAMA_EMBEDDINGS_HOST=http://ollama-snowflake:11434
+      - EMBEDDINGS_LLM=snowflake-arctic-embed:33m
+    volumes:
+      - ./:/app
+    depends_on:
+      ollama-snowflake:
+        condition: service_started
+
+  diagnostic:
+    build: .
+    command: go run main.go; sleep infinity
+    environment:
+      - OLLAMA_HOST=http://ollama-deepseek:11434
+      - OLLAMA_EMBEDDINGS_HOST=http://ollama-snowflake:11434
+      - LLM=deepseek-r1:1.5b
+      - EMBEDDINGS_LLM=snowflake-arctic-embed:33m
+    volumes:
+      - ./:/app
+    depends_on:
+      ollama-deepseek:
+        condition: service_started
+      ollama-snowflake:
+        condition: service_started
+      chunks-service:
+        condition: service_completed_successfully
+    develop:
+      watch:
+        - action: rebuild
+          path: ./main.go
+
