@@ -25,20 +25,9 @@ func main() {
 	if model == "" {
 		model = "deepseek-r1:1.5b"
 	}
-	// deepseek-r1:1.5b 🔴🔥
-	// deepseek-r1:7b 🔴
-	// deepseek-r1:8b 🔴
-	// deepseek-r1:14b 🔴
-	// deepseek-r1:32b 🟢
 
 	fmt.Println("🌍", ollamaUrl, "📕", model)
 
-	/*
-		client, errCli := api.ClientFromEnvironment()
-		if errCli != nil {
-			log.Fatal("😡:", errCli)
-		}
-	*/
 
 	url, _ := url.Parse(ollamaUrl)
 	client := api.NewClient(url, http.DefaultClient)
@@ -53,7 +42,7 @@ func main() {
 		log.Fatal("😡:", err)
 	}
 
-	irisDatabase, err := os.ReadFile("iris-database.md")
+	irisDatabase, err := os.ReadFile("iris-database.xml")
 	if err != nil {
 		log.Fatal("😡:", err)
 	}
@@ -83,7 +72,7 @@ func main() {
 	// Prompt construction
 	messages := []api.Message{
 		{Role: "system", Content: string(systemInstructions)},
-		{Role: "system", Content: string(irisDatabase)},
+		{Role: "system", Content: "# Iris Database\n" + string(irisDatabase)},
 		{Role: "system", Content: string(irisInstructions)},
 		{Role: "user", Content: userContent},
 	}

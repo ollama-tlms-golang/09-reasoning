@@ -25,11 +25,6 @@ func main() {
 	if model == "" {
 		model = "deepseek-r1:1.5b"
 	}
-	// deepseek-r1:1.5b
-	// deepseek-r1:7b
-	// deepseek-r1:8b
-	// deepseek-r1:14b
-	// deepseek-r1:32b
 
 	fmt.Println("🌍", ollamaUrl, "📕", model)
 
@@ -45,38 +40,23 @@ func main() {
 	4. Use plain numbers with units
 	5. Explain the concept without using mathematical notation
 	6. Describe the solution in simple terms without formulas
-
 	`
+	//statement := `Given: Rectangle with length 8m, width 4,28m`
+	//userContent := "Question: Calculate the rectangle's area"
 
-	/*
-		knowledge := `# Knowledge base
-		<known-formulas>
-			<formula>
-				Area of a rectangle:
-				- Formula: Area = length × width
-				- Similar example: 3m × 2m = 6m²
-			</formula>
-		</known-formulas>
-		`
-	*/
+	//statement := `Given: Rectangle with length 8m, width 4m`
+	//userContent := "Question: Calculate the rectangle's area"
 
-	/*
-		statement := `Given: Rectangle with length 8m, width 4m`
-		userContent := "Question: Calculate the rectangle's area"
+	statement := `Given: Circle with radius 5 meters`
+	userContent := `Problem Calculate area and perimeter of circle. 
+	Use simple mathematical notation with basic symbols (* for multiplication, × or x, ^ for powers, etc.) 
+	rather than LaTeX or complex notations.`
 
-		statement := `Given: Circle with radius 5 meters`
-		userContent := `Problem Calculate area and perimeter of circle
-		Expected accuracy: 2 decimal places
-		`
-	*/
-
-	statement := `Given: Rectangle with length 8m, width 4.28m`
-	userContent := "Question: Calculate the rectangle's area"
+	// Expected accuracy: 2 decimal places
 
 	// Prompt construction
 	messages := []api.Message{
 		{Role: "system", Content: systemInstructions},
-		//{Role: "system", Content: knowledge},
 		{Role: "system", Content: statement},
 		{Role: "user", Content: userContent},
 	}
