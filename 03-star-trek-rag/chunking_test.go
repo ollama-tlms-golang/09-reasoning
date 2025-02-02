@@ -32,7 +32,7 @@ func TestGenerateChunk(t *testing.T) {
 	url, _ := url.Parse(ollamaEmbeddingsUrl)
 	embeddingsClient := api.NewClient(url, http.DefaultClient)
 
-	content, err := os.ReadFile("./federation-medical-database.md")
+	content, err := os.ReadFile("./federation-medical-database.xml")
 	if err != nil {
 		log.Fatal("😡:", err)
 	}

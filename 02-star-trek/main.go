@@ -23,13 +23,13 @@ func main() {
 
 	model := os.Getenv("LLM")
 	if model == "" {
-		model = "deepseek-r1:32b"
+		model = "deepseek-r1:1.5b"
 	}
-	// deepseek-r1:1.5b 🔴🔥
+	// deepseek-r1:1.5b 🔴
 	// deepseek-r1:7b 🔴
 	// deepseek-r1:8b 🔴
 	// deepseek-r1:14b 🔴
-	// deepseek-r1:32b 🟢
+	// deepseek-r1:32b 🔴
 
 	fmt.Println("🌍", ollamaUrl, "📕", model)
 
