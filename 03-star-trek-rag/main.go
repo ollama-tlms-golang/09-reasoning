@@ -49,13 +49,6 @@ func main() {
 	url, _ := url.Parse(ollamaUrl)
 	chatClient := api.NewClient(url, http.DefaultClient)
 
-	/*
-		client, errCli := api.ClientFromEnvironment()
-		if errCli != nil {
-			log.Fatal("😡:", errCli)
-		}
-	*/
-
 	url, _ = url.Parse(ollamaEmbeddingsUrl)
 	embeddingsClient := api.NewClient(url, http.DefaultClient)
 
@@ -69,13 +62,6 @@ func main() {
 		log.Fatal("😡:", err)
 	}
 
-	/*
-		federationMedicalDatabase, err := os.ReadFile("federation-medical-database.md")
-		if err != nil {
-			log.Fatal("😡:", err)
-		}
-	*/
-
 	vectorStore := []rag.VectorRecord{}
 	storeFile := "store-federation-medical-database.json"
 	file, err := os.ReadFile(storeFile)
@@ -86,6 +72,7 @@ func main() {
 		log.Fatal("😡 Failed to unmarshal store:", err)
 	}
 
+	/*
 	// Andorian Ice Plague
 	userContent := `Using the above information and the below information, 
 
@@ -97,14 +84,19 @@ func main() {
 
 	Make a diagnosis of the disease, provide the name of the disease and propose a treatment
 	`
-
-	/*
-	   - Progressive skin crystallization
-	   - Internal organ freezing
-	   - Antennae necrosis
-	   - Hypothermic shock
-
 	*/
+
+	// Betazoid Empathic Overload
+	userContent := `Using the above information and the below information, 
+
+		The symptoms of the patient are:
+			- Uncontrolled emotion reading
+			- Psychic barrier breakdown
+			- Mental exhaustion
+			- Emotional flooding
+	
+		Make a diagnosis of the disease, provide the name of the disease and propose a treatment
+	`
 
 	// 🧠 Get the context from the similarities
 	embeddingFromQuestion, _ := rag.GetEmbeddingFromChunk(ctx, embeddingsClient, embeddingsModel, userContent)
@@ -152,8 +144,8 @@ func main() {
 	// Prompt construction
 	messages := []api.Message{
 		{Role: "system", Content: string(systemInstructions)},
-		{Role: "system", Content: extractFromFederationMedicalDatabase},
 		{Role: "system", Content: string(medicalInstructions)},
+		{Role: "system", Content: extractFromFederationMedicalDatabase},
 		{Role: "user", Content: userContent},
 	}
 
