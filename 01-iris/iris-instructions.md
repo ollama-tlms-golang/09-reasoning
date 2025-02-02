@@ -63,3 +63,5 @@ Classification process:
 4. Confidence is high due to the distinctive petal size
 
 Therefore, this specimen is classified as Setosa with high confidence."
+
+After a certain point in your response, once you feel you have thoroughly addressed the main question or topic, please wrap up your reasoning process and conclude your answer, rather than going on indefinitely.

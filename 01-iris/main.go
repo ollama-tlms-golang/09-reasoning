@@ -24,10 +24,11 @@ func main() {
 	model := os.Getenv("LLM")
 	if model == "" {
 		model = "deepseek-r1:1.5b"
+		//model = "deepseek-r1:7b"
+
 	}
 
 	fmt.Println("🌍", ollamaUrl, "📕", model)
-
 
 	url, _ := url.Parse(ollamaUrl)
 	client := api.NewClient(url, http.DefaultClient)
@@ -47,33 +48,49 @@ func main() {
 		log.Fatal("😡:", err)
 	}
 
-	// Verginica
 	/*
+		// Verginica
 		userContent := `Using the above information and the below information,
 		Given a specimen with:
 		- Petal width: 2,5 cm
 		- Petal length: 6 cm
 		- Sepal width: 3,3 cm
 		- Sepal length: 6,3 cm
-		What is the species of the iris?
-		`
+		What is the species of the iris?`
+
+		// Versicolor
+		userContent := `Using the above information and the below information,
+		Given a specimen with:
+		- Petal width: 1,5 cm
+		- Petal length: 4,5 cm
+		- Sepal width: 3,2 cm
+		- Sepal length: 6,4 cm
+		What is the species of the iris?`
+
+		// Setosa
+		userContent := `Using the above information and the below information,
+		Given a specimen with:
+		- Petal width: 0,2 cm
+		- Petal length: 1,4 cm
+		- Sepal width: 3,6 cm
+		- Sepal length: 5 cm
+		What is the species of the iris?`
 	*/
 
-	// Versicolor
-	userContent := `Using the above information and the below information, 
+	// Verginica
+	userContent := `Using the above information and the below information,
 	Given a specimen with:
-	- Petal width: 1,5 cm
-	- Petal length: 4,5 cm
-	- Sepal width: 3,2 cm
-	- Sepal length: 6,4 cm
-	What is the species of the iris?
-	`
+	- Petal width: 1,9 cm
+	- Petal length: 5,1 cm
+	- Sepal width: 2,7 cm
+	- Sepal length: 5,8 cm
+	What is the species of the iris?`
 
 	// Prompt construction
 	messages := []api.Message{
 		{Role: "system", Content: string(systemInstructions)},
-		{Role: "system", Content: "# Iris Database\n" + string(irisDatabase)},
 		{Role: "system", Content: string(irisInstructions)},
+		{Role: "system", Content: "# Iris Database\n" + string(irisDatabase)},
 		{Role: "user", Content: userContent},
 	}
 
